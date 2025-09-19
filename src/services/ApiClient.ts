@@ -8,3 +8,23 @@ export const apiBackend = axios.create({
   },
 });
 
+// Interceptor para agregar el token si existe
+apiBackend.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token"); // O sessionStorage
+    const skipAuth = config?.headers?.skipAuth;
+
+    // Solo se agrega el token si no se especifica que se debe saltar la autenticación
+    if (token && !skipAuth) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    // Elimina la propiedad skipAuth del header para que no se envíe al backend
+    if (skipAuth) {
+      delete config.headers.skipAuth;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
