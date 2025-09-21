@@ -51,6 +51,14 @@ const menuItems: MenuItem[] = [
     ],
   },
   {
+    title: "Materiales",
+    icon: "/assets/images-dashboard/icons/04.svg",
+    children: [
+      { title: "Lista de Materiales", href: "/dashboard/materiales-list" },
+      { title: "Crear Material", href: "/dashboard/create-material" },
+    ],
+  },
+  {
     title: "Transactions",
     icon: "/assets/images-dashboard/icons/06.svg",
     href: "/dashboard/transaction",
@@ -89,7 +97,10 @@ const SidebarMenu = () => {
     // Find the index of the menu item that has a child matching the current path
     const activeIndex = menuItems.findIndex((item) => {
       return item.children?.some((child) => {
-        return pathname === child.href || (child.title === "Main Demo" && pathname === "/index");
+        return (
+          pathname === child.href ||
+          (child.title === "Main Demo" && pathname === "/index")
+        );
       });
     });
 
@@ -99,7 +110,7 @@ const SidebarMenu = () => {
   }, [pathname]);
 
   const handleToggle = (index: number) => {
-    setOpenIndex(prev => (prev === index ? null : index));
+    setOpenIndex((prev) => (prev === index ? null : index));
   };
 
   return (
@@ -130,14 +141,22 @@ const SidebarMenu = () => {
             )}
 
             {hasSubmenu && (
-              <ul className={`submenu mm-collapse parent-nav ${isOpen ? "mm-show" : ""}`}>
+              <ul
+                className={`submenu mm-collapse parent-nav ${
+                  isOpen ? "mm-show" : ""
+                }`}
+              >
                 {item.children!.map((sub, subIndex) => {
-                  const isActive = pathname === sub.href || (sub.title === "Main Demo" && pathname === "/index");
+                  const isActive =
+                    pathname === sub.href ||
+                    (sub.title === "Main Demo" && pathname === "/index");
                   return (
                     <li key={subIndex}>
                       <Link
                         href={sub.href}
-                        className={`mobile-menu-link ${isActive ? "active" : ""}`}
+                        className={`mobile-menu-link ${
+                          isActive ? "active" : ""
+                        }`}
                       >
                         {sub.title}
                       </Link>
