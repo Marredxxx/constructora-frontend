@@ -126,14 +126,14 @@ const MaterialTable = () => {
         <div className="action-buttons d-flex gap-2">
           <button
             type="button"
-            className="btn btn-primary btn-custom"
+            className="  btn-custom primary"
             onClick={() => handleOpenEditModal(row)}
           >
             Editar
           </button>
           <button
             type="button"
-            className="btn btn-danger btn-custom"
+            className="btn-custom danger"
             onClick={() => handleOpenDeleteModal(row)}
           >
             Borrar
