@@ -1,4 +1,5 @@
 import axios from "axios";
+import AuthService from "./auth/Auth.service";
 
 export const apiBackend = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000",
@@ -11,7 +12,7 @@ export const apiBackend = axios.create({
 // Interceptor para agregar el token si existe
 apiBackend.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // O sessionStorage
+    const token = AuthService.getToken(); // O sessionStorage
     const skipAuth = config?.headers?.skipAuth;
 
     // Solo se agrega el token si no se especifica que se debe saltar la autenticación

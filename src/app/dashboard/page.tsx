@@ -1,11 +1,18 @@
 // app/dashboard/page.tsx
 "use client";
 import { useState } from 'react';
+
 import SideLeft from "./components/SideLeft";
 import Header from "./components/Header";
 import DemoContent from "./components/DemoContent";
+import AuthService from '@/services/auth/Auth.service';
+import Loading from './components/Loading';
 
 export default function Home() {
+  if (!AuthService.checkAuth()) {
+    return (<Loading />);
+  }
+
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const toggleSidebar = () => {

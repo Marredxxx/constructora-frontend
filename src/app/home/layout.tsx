@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-
 import "./globals.css";
-import "../../public/assets/css/bootstrap.min.css";
-import "../../public/assets/css/plugins.css";
-import "../../public/assets/css/style.css";
+import "../../../public/assets/css/bootstrap.min.css";
+import "../../../public/assets/css/plugins.css";
+import "../../../public/assets/css/style.css";
 
-// import "../../../public-dashboard/assets/css/plugins.css";
-import "../../public-dashboard/assets/css/table.css";
-import "../../public-dashboard/assets/css/style.css";
+
+import { CartProvider } from "../../components/header/CartContext";
+import { WishlistProvider } from "../../components/header/WishlistContext";
+import { CompareProvider } from "../../components/header/CompareContext";
 
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,11 +42,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <div className="dashboard-wrapper">
-          {children}
-        </div>
+        <CompareProvider>
+          <WishlistProvider>
+            <CartProvider>
+              {children}
+              <ToastContainer position="top-right" autoClose={3000} />
+            </CartProvider>
+          </WishlistProvider>
+        </CompareProvider>
       </body>
     </html>
   );

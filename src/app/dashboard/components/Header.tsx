@@ -1,6 +1,9 @@
 "use client";
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import AuthService from '@/services/auth/Auth.service';
+import Loading from './Loading';
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -48,6 +51,15 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
     { icon: "fa-light fa-user", text: "Profile Setting", href: "profile-setting.html" },
     { icon: "fa-regular fa-gear", text: "Settings", href: "#" },
   ];
+
+  const handleLogout = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    AuthService.logout();
+    if (!AuthService.checkAuth()) {
+      window.location.replace('/');
+    }
+  }
 
   return (
     <header className="header-one">
@@ -298,8 +310,8 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
                 </ul>
               </div>
               <div className="popup-footer-btn">
-                <a href="#" className="geex-content__header__popup__footer__link">
-                  Logout
+                <a href="#" className="geex-content__header__popup__footer__link" onClick={handleLogout}>
+                  Cerrar sesión
                   <i className="fa-light fa-arrow-right" />
                 </a>
               </div>
